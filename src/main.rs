@@ -1,9 +1,12 @@
 extern crate termion;
 
-use std::io::{self, Write};
+use std::io;
 use std::vec;
 use termion::raw::IntoRawMode;
 use termion::input::TermRead;
+mod tetromino;
+use termion::event::Key;
+
 
 const BOARD_WIDTH: usize = 10;
 const BOARD_HEIGHT: usize = 20;
@@ -17,25 +20,13 @@ fn main(){
     // ToDo: Handle unwrap creacefully without panic
     let mut stdout = stdout.lock().into_raw_mode().unwrap();
 
-    print_board(&game_board);
-    for c in io::stdin().keys() {
-        // Handle user input here
 
-        // Update game state here
 
-        // Render the game here
 
-        // Check for game over here
+    // for c in io::stdin().keys() {
+        
+    // }
 
-        // Exit game loop on game over
-        if true{
-            break;
-        }
-    }
+
 }
-fn print_board(board: &Vec<Vec<char>>) {
-    for row in board.iter() {
-        let row_str: String = row.iter().collect();
-        println!("*");
-    }
-}   
+
