@@ -17,10 +17,10 @@ pub struct GameBoard{
 }
 
 impl GameBoard{
-    pub fn new(width: i32, height:i32) -> Self{
+    pub fn new(width: u32, height:u32) -> Self{
         return Self{
-            width,
-            height,
+            width: width as i32,
+            height: height as i32,
             current_shape: shapes::Shape::new_random(),
             fixed_shapes: vec![],
             lost: false,
@@ -33,6 +33,25 @@ impl GameBoard{
         })
       }
       
+      pub fn iter_positions(&self) -> impl Iterator<Item = shapes::Pos> {
+        let width = self.width;
+        let height = self.height;
+    
+        (0..height).flat_map(move |y| (0..width).map(move |x| shapes::Pos(x, y)))
+      }
+
+  pub fn get(&self, pos: shapes::Pos) -> Option<&'static str> {
+    if self.current_shape.has_position(pos) {
+      Some(self.current_shape.typ())
+    } else {
+      self
+        .fixed_shapes
+        .iter()
+        .find(|shape| shape.has_position(pos))
+        .map(|shape| shape.typ())
+    }
+  }
+
   pub fn is_colliding(&self, shape: &shapes::Shape) -> bool {
     self
       .fixed_shapes
@@ -124,7 +143,6 @@ impl GameBoard{
       self.current_shape = rotated_current_shape;
     }
   }
-  
 }
 
 #[cfg(test)]
