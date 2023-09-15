@@ -82,6 +82,19 @@ impl Shape {
             _ => unreachable!(),
         }
     }
+
+    pub fn iter_positions(&self) -> impl Iterator<Item = Pos> + '_ {
+        self.positions.iter().copied()
+      }
+    
+      pub fn has_position(&self, pos: Pos) -> bool {
+        self.positions.contains(&pos)
+      }
+    
+      pub fn collides_with(&self, other: &Shape) -> bool {
+        self.positions.intersection(&other.positions).count() > 0
+      }
+    
 }
 
 pub const I_TETROMINO: [[char; 4]; 4] = [
